@@ -1,18 +1,26 @@
 #include <iostream>
 #include <fstream>
 #include "SortableList.h"
+#include "Timer.h"
 
 
 int main() {
 
 std::cout<<"hello"<<std::endl;
+SortableList<double, 5000> srt_lst;
 
-SortableList<float, 3> srt_lst;
-std::array<float, 3> new_array = {1.1, 22.4, 123.54};
-std::cout<<srt_lst<<std::endl;
-srt_lst.set_array(new_array);
-std::cout<<srt_lst<<std::endl;
+std::cout<<"quick sort time:"<<std::endl;
+{
+    Benchmark timer;
+    srt_lst.quick_sort();
+    
+}
+    srt_lst.reshuffle();
+    std::cout<<"merge sort time:"<<std::endl;
+{
+    Benchmark timer;
+    srt_lst.merge_sort();
+}
+    srt_lst.reshuffle();
 
-new_array[0]= 69;
-std::cout<<srt_lst;
 }

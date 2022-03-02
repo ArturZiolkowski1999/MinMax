@@ -43,3 +43,5 @@
 include/divisible/*
 
 build*/
+
+.vscode
