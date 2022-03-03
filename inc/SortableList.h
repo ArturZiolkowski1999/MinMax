@@ -2,28 +2,33 @@
 #define SORTABLE_LIST_H
 
 #include <iostream>
-#include <cmath>
 #include <cstdlib>
 #include <array>
 #include <algorithm>
+#include <cmath>
 
 template <typename T, unsigned int dimension>
 class SortableList {
 private:
     std::array<T, dimension> sortable_array;
     void merge(int const left, int const mid, int const right);
+    void heapify(int const size, int const root);
+    void intro_sort_utility(int const begin, int const end, int const depth_limit);
 public:
     SortableList();
     void reshuffle();
-    void quick_sort(int begin = 0, int end = int(dimension-1));
+    void quick_sort(int const begin = 0, int const end = int(dimension-1));
     void merge_sort(int const begin = 0, int const end = int(dimension-1));
-    // void intro_sort();
+    void insertion_sort(int const begin = 0, int const end = int(dimension-1));
+    void heap_sort(int const size = int(dimension));
+    //TODO: correct introsort imprementation !!!
+    void intro_sort(int const begin = 0, int const end = int(dimension-1));
 
     template<typename T1, unsigned int dimension1>
     friend std::ostream &operator<<(std::ostream &ost, SortableList<T1, dimension1> &srt_list);
     
     void set_array(std::array<T, dimension> &srt_array);
-    //TODO: = operator for array and SortableList
+    //TODO: operator = for array and SortableList
 };
 
 template<typename T, unsigned int dimension>
@@ -50,7 +55,7 @@ void SortableList<T, dimension>::reshuffle() {
 }
 
 template<typename T, unsigned int dimension>
-void SortableList<T, dimension>::quick_sort(int begin, int end) {  
+void SortableList<T, dimension>::quick_sort(int const begin, int const end) {  
     
     int left_index = begin - 1;
     int right_index = end + 1;
@@ -131,5 +136,74 @@ void SortableList<T, dimension>::merge_sort(int const begin, int const end) {
     merge_sort(begin, mid);
     merge_sort(mid + 1, end);
     merge(begin, mid, end);
+}
+
+template<typename T, unsigned int dimension>
+void SortableList<T, dimension>::insertion_sort(int const begin, int const end) {  
+    
+    // int key, j;
+    for (int i = begin + 1; i <= end; ++i){
+        int key = this->sortable_array[i];
+        int j = i - 1;
+        while (j >= begin && this->sortable_array[j] > key){
+            this->sortable_array[j+1] = this->sortable_array[j];
+            j--;
+        }
+        this->sortable_array[j+1] = key;
+    }
+    return;
+}
+
+template<typename T, unsigned int dimension>
+void SortableList<T, dimension>::heap_sort(int const size) {  
+    for (int i = size/2 - 1; i >= 0; --i){
+        heapify(size, i);
+    }
+
+    for (int i = size - 1; i > 0; --i){
+        std::swap(this->sortable_array[0], this->sortable_array[i]);
+        heapify(i,0);
+    }
+}
+
+template<typename T, unsigned int dimension>
+void SortableList<T, dimension>::heapify(int const size, int const root) {  
+    int largest = root;
+    int left = 2 * root + 1;
+    int right = 2 * root + 2;
+
+    if (left < size && this->sortable_array[left] > this->sortable_array[largest]){
+        largest = left;
+    }
+
+    if (right < size && this->sortable_array[right] > this->sortable_array[largest]){
+        largest = right;
+    }
+
+    if(largest != root){
+        std::swap(this->sortable_array[root], this->sortable_array[largest]);
+        heapify(size, largest);
+    }
+}
+
+template<typename T, unsigned int dimension>
+void SortableList<T, dimension>::intro_sort_utility(int const begin, int const end, int const depth_limit) {  
+    int size = end - begin;
+
+    if (size < 16){
+        insertion_sort(begin, end);
+        return;
+    }else if (depth_limit == 0){
+        heap_sort();
+    }else{
+        quick_sort();
+    }
+}
+
+template<typename T, unsigned int dimension>
+void SortableList<T, dimension>::intro_sort(int const begin, int const end) {  
+    int const depth_limit = 2 * std::log(end - begin);
+    intro_sort_utility(begin, end, depth_limit);
+    return;
 }
 #endif //SORTABLE_LIST_H
