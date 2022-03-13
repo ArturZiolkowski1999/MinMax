@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/SORT_ALGORITHMS_run.dir/src/main.cpp.o  -o SORT_ALGORITHMS_run 

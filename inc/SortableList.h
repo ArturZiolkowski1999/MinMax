@@ -16,7 +16,7 @@ private:
     void intro_sort_utility(int const begin, int const end, int const depth_limit);
 public:
     SortableList();
-    void reshuffle();
+    void reshuffle(float percentage = 0);
     void quick_sort(int const begin = 0, int const end = int(dimension-1));
     void merge_sort(int const begin = 0, int const end = int(dimension-1));
     void insertion_sort(int const begin = 0, int const end = int(dimension-1));
@@ -33,7 +33,7 @@ public:
 
 template<typename T, unsigned int dimension>
 SortableList<T, dimension>::SortableList() {
-    this->reshuffle();
+    std::generate(this->sortable_array.begin(), this->sortable_array.end(), std::rand);
 }
 
 template<typename T, unsigned int dimension>
@@ -50,8 +50,10 @@ void SortableList<T, dimension>::set_array(std::array<T, dimension> &srt_array) 
 }
 
 template<typename T, unsigned int dimension>
-void SortableList<T, dimension>::reshuffle() {
+void SortableList<T, dimension>::reshuffle(float percentage) {
     std::generate(this->sortable_array.begin(), this->sortable_array.end(), std::rand);
+    int end = (percentage * (dimension-1))/100;
+    this->quick_sort(0, end);
 }
 
 template<typename T, unsigned int dimension>

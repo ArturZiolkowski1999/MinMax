@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSORT_ALGORITHMS_lib.a  CMakeFiles/SORT_ALGORITHMS_lib.dir/src/main.cpp.o
+/usr/bin/ranlib libSORT_ALGORITHMS_lib.a

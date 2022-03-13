@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/SortableList.h
+iostream
+-
+cstdlib
+-
+array
+-
+algorithm
+-
+cmath
+-
+
+../inc/Timer.h
+iostream
+-
+memory
+-
+chrono
+-
+
+/home/ziolko/sort_algorithms/src/main.cpp
+iostream
+-
+fstream
+-
+SortableList.h
+/home/ziolko/sort_algorithms/src/SortableList.h
+Timer.h
+/home/ziolko/sort_algorithms/src/Timer.h
+
