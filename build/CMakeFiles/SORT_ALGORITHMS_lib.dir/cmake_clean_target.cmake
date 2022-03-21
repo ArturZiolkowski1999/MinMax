@@ -1,3 +1,0 @@
-file(REMOVE_RECURSE
-  "libSORT_ALGORITHMS_lib.a"
-)
