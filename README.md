@@ -8,6 +8,6 @@ Example:
 > mkdir build && cd build
 > cmake .. 
 > make 
-> ./DRONE_SCENE_tst  
 > ./SORT_ALGORITHMS_run
+>cd tst && ./SORT_ALGORITHMS_tst  
 ```
