@@ -21,14 +21,12 @@ public:
     void merge_sort(int const begin = 0, int const end = int(dimension-1));
     void insertion_sort(int const begin = 0, int const end = int(dimension-1));
     void heap_sort(int const size = int(dimension));
-    //TODO: correct introsort imprementation !!!
-    void intro_sort(int const begin = 0, int const end = int(dimension-1));
 
     template<typename T1, unsigned int dimension1>
     friend std::ostream &operator<<(std::ostream &ost, SortableList<T1, dimension1> &srt_list);
+    T &operator[](unsigned int index);
     
     void set_array(std::array<T, dimension> &srt_array);
-    //TODO: operator = for array and SortableList
 };
 
 template<typename T, unsigned int dimension>
@@ -203,9 +201,8 @@ void SortableList<T, dimension>::intro_sort_utility(int const begin, int const e
 }
 
 template<typename T, unsigned int dimension>
-void SortableList<T, dimension>::intro_sort(int const begin, int const end) {  
-    int const depth_limit = 2 * std::log(end - begin);
-    intro_sort_utility(begin, end, depth_limit);
-    return;
+T &SortableList<T, dimension>::operator[](unsigned int index){
+    return this->sortable_array[index];
 }
+
 #endif //SORTABLE_LIST_H
