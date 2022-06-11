@@ -1,9 +1,9 @@
 # pragma once
 # include <array>
-# include <vector>
 # include <limits>
 # include <iostream>
 # include <Move.h>
+# include <MyVector.h>
 
 
 enum end_game_conditiond{
@@ -261,11 +261,8 @@ Move Game<size, win_condition>::get_best_move(int player, int depth){
         }
     }
 
-    int middle_bonus = 0;
-    if (this->board[size/2][size/2] == 'o') middle_bonus = 4;
-
     if(rv == AI_WIN){
-        return Move(2*blank_spaces * middle_bonus);
+        return Move(2*blank_spaces);
     }else if(rv == PLAYER_WIN){
         return Move(-2*blank_spaces);
     }else if (rv == TIE){
@@ -277,7 +274,7 @@ Move Game<size, win_condition>::get_best_move(int player, int depth){
     }
     depth--;
 
-    std::vector<Move> moves;
+    MyVector<Move> moves;
     // Do recursive
     for(int column = 0; column < size; ++column){
         for(int row = 0; row < size; ++row){
@@ -289,12 +286,14 @@ Move Game<size, win_condition>::get_best_move(int player, int depth){
                 //if player is person
                 if(player == 0){
                     this->board[row][column] = 'x';
+                    // rv = this->validate_win_condition();
                     move.score = get_best_move(1, depth).score;
                     moves.push_back(move);
                     this->board[row][column] = ' ';
                     
                 }else{
                     this->board[row][column] = 'o';
+                    // rv = this->validate_win_condition();
                     move.score = get_best_move(0, depth).score;
                     moves.push_back(move);
                     this->board[row][column] = ' ';         
